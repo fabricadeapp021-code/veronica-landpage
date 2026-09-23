@@ -81,7 +81,7 @@ export default function VeronicaChat() {
     setIsSending(true);
 
     try {
-      const response = await fetch(`${apiUrl}/public/veronica/chat`, {
+      const response = await fetch(`${apiUrl}/public/veronica/chat-stream`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -92,20 +92,45 @@ export default function VeronicaChat() {
         }),
       });
 
-      const data = await response.json().catch(() => ({}));
-      if (!response.ok) {
-        throw new Error(data?.message || "A Veronica nao conseguiu responder agora.");
+      if (!response.ok || !response.body) {
+        throw new Error("A Veronica nao conseguiu responder agora.");
       }
 
-      setMessages((current) => [
-        ...current,
-        {
-          role: "assistant",
-          content:
-            data.reply ||
-            "Consigo te ajudar com atendimento 24/7, vendas, triagem e handoff humano.",
-        },
-      ]);
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split("\n");
+        buffer = lines.pop() ?? "";
+
+        for (const line of lines) {
+          if (!line.startsWith("data: ")) continue;
+          try {
+            const event = JSON.parse(line.slice(6));
+            if (event.type === "complete") {
+              setMessages((current) => [
+                ...current,
+                {
+                  role: "assistant",
+                  content:
+                    event.reply ||
+                    "Consigo te ajudar com atendimento 24/7, vendas, triagem e handoff humano.",
+                },
+              ]);
+            } else if (event.type === "error") {
+              throw new Error(event.error || "Erro ao processar mensagem.");
+            }
+          } catch (parseErr) {
+            if (parseErr instanceof SyntaxError) continue;
+            throw parseErr;
+          }
+        }
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Falha ao falar com a Veronica.");
       setMessages((current) => [
