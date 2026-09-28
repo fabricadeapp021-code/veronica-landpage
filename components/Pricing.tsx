@@ -64,7 +64,7 @@ const plans = [
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="py-24 lg:py-32 relative">
+    <section id="pricing" className="py-16 lg:py-24 relative">
       <div className="glow-orb w-[500px] h-[500px] bg-brand-600 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style={{ opacity: 0.08 }} />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

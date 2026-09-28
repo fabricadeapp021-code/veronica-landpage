@@ -64,7 +64,7 @@ const visionPoints = [
 
 export default function Vision() {
   return (
-    <section className="py-24 lg:py-32 relative overflow-hidden">
+    <section className="py-16 lg:py-24 relative overflow-hidden">
       {/* Background accent */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -88,7 +88,7 @@ export default function Vision() {
               <span className="gradient-text">vida e respondem perguntas</span>
             </h2>
             <p className="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
-              Com o OpenClaw, seus PDFs, contratos, relatórios e manuais deixam
+              Com a Venorica AI, seus PDFs, contratos, relatórios e manuais deixam
               de ser arquivos estáticos. Eles se tornam conhecimento ativo que
               seus agentes usam em tempo real, direto no WhatsApp.
             </p>
@@ -126,7 +126,7 @@ export default function Vision() {
                 {/* After */}
                 <div className="space-y-1.5">
                   <p className="text-[10px] text-brand-400 uppercase tracking-wider font-semibold">
-                    Com OpenClaw
+                    Com Venorica AI
                   </p>
                   <div
                     className="rounded-lg p-3 flex items-start gap-2"
@@ -149,7 +149,7 @@ export default function Vision() {
             <div className="grid sm:grid-cols-4 gap-4">
               {[
                 { step: "1", label: "Upload do doc", desc: "PDF, DOCX, planilha, URL ou integração direta" },
-                { step: "2", label: "Indexação semântica", desc: "O OpenClaw cria embeddings vetoriais do conteúdo" },
+                { step: "2", label: "Indexação semântica", desc: "A Venorica AI cria embeddings vetoriais do conteúdo" },
                 { step: "3", label: "Memória do agente", desc: "O documento vira conhecimento vivo do agente" },
                 { step: "4", label: "Resposta contextual", desc: "Cliente pergunta, agente cita o trecho certo" },
               ].map((s) => (
@@ -186,7 +186,7 @@ export default function Vision() {
               <div>
                 <div className="flex items-center gap-2 mb-1">
                   <p className="text-brand-400 text-sm font-semibold uppercase tracking-widest">
-                    O sonho do OpenClaw
+                    O sonho da Venorica AI
                   </p>
                   <Globe className="w-4 h-4 text-brand-400" />
                 </div>
@@ -202,7 +202,7 @@ export default function Vision() {
             <div className="grid lg:grid-cols-2 gap-10 items-start">
               <div className="space-y-5">
                 <p className="text-gray-300 text-base leading-relaxed">
-                  O OpenClaw nasceu de uma crença simples: toda empresa deveria ter acesso
+                  A Venorica AI nasceu de uma crença simples: toda empresa deveria ter acesso
                   ao mesmo nível de infraestrutura de IA que as gigantes da tecnologia —
                   independente do tamanho ou orçamento.
                 </p>

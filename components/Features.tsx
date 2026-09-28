@@ -7,6 +7,9 @@ import {
   Mic,
   Wrench,
   Users,
+  KeyRound,
+  Megaphone,
+  BellRing,
 } from "lucide-react";
 
 const features = [
@@ -14,9 +17,33 @@ const features = [
     icon: MessageCircle,
     color: "text-green-400",
     bg: "bg-green-400/10 border-green-400/20",
-    title: "WhatsApp nativo",
+    title: "API oficial do WhatsApp",
     description:
-      "Cada agente tem seu próprio número de WhatsApp. Seus clientes falam normalmente — o agente responde como um funcionário real.",
+      "Conectado direto à API oficial do WhatsApp Business (Meta) — sem número compartilhado, sem gambiarra, sem risco de banimento.",
+  },
+  {
+    icon: KeyRound,
+    color: "text-lime-400",
+    bg: "bg-lime-400/10 border-lime-400/20",
+    title: "Conexão via OAuth 2",
+    description:
+      "Você conecta sua própria conta do WhatsApp Business direto na nossa aplicação, com login seguro via OAuth 2 — a titularidade do número é sua.",
+  },
+  {
+    icon: Megaphone,
+    color: "text-fuchsia-400",
+    bg: "bg-fuchsia-400/10 border-fuchsia-400/20",
+    title: "Campanhas em massa",
+    description:
+      "Dispare campanhas para milhares de contatos com templates aprovados pela Meta, dentro das regras oficiais do WhatsApp Business.",
+  },
+  {
+    icon: BellRing,
+    color: "text-indigo-400",
+    bg: "bg-indigo-400/10 border-indigo-400/20",
+    title: "Mensagens ativas",
+    description:
+      "O agente não espera só ser chamado: ele inicia contato, envia lembretes, faz follow-up e reativa leads frios por conta própria.",
   },
   {
     icon: Brain,
@@ -78,7 +105,7 @@ const features = [
 
 export default function Features() {
   return (
-    <section id="features" className="py-24 lg:py-32 relative">
+    <section id="features" className="py-16 lg:py-24 relative">
       <div className="glow-orb w-[600px] h-[600px] bg-accent-500 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style={{ opacity: 0.05 }} />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
