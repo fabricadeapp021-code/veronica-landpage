@@ -1,97 +1,67 @@
 import Image from "next/image";
-import { Phone, Crown, Star, Clock, TrendingDown } from "lucide-react";
+import { Crown, Star, Clock, TrendingDown } from "lucide-react";
 
 const agents = [
   {
-    name: "Verônica",
-    seed: "Veronica",
-    role: "Atendente 24/7",
+    name: "Ranny",
+    photo: "/agents/ranny.jpg",
+    role: "Consultora de Imóveis",
     featured: true,
-    phone: "+55 (11) 9 4020-1984",
     description:
-      "O primeiro rosto da sua empresa no WhatsApp. Verônica recebe todos os clientes, faz triagem e nunca deixa ninguém sem resposta.",
+      "Transforma um pedido genérico em uma busca imobiliária clara e conduz o interesse até a visita.",
     gradient: "from-violet-600 via-purple-600 to-indigo-600",
     bgGlow: "rgba(139,92,246,0.25)",
     costHour: "R$ 0,80",
     costMonth: "R$ 497",
-    humanMonth: "R$ 4.500",
     economy: "89%",
     satisfaction: 98,
-    skills: ["Primeiro atendimento 24/7", "Triagem e roteamento", "FAQ e suporte inicial"],
+    skills: [
+      "Entende objetivo, região e orçamento do cliente",
+      "Consulta o catálogo antes de apresentar qualquer imóvel",
+      "Identifica o momento certo de pedir visita",
+    ],
   },
   {
-    name: "Bruno",
-    seed: "Bruno",
-    role: "Agente de Vendas",
+    name: "Helena",
+    photo: "/agents/helena.jpg",
+    role: "Parcerias e Expansão B2B",
     featured: false,
-    phone: null,
     description:
-      "Qualifica leads, envia propostas personalizadas e faz follow-up sem esquecer nenhuma oportunidade.",
+      "Transforma corretores, imobiliárias e profissionais de confiança em canais ativos de novas oportunidades.",
     gradient: "from-blue-600 via-cyan-500 to-teal-500",
     bgGlow: "rgba(6,182,212,0.2)",
     costHour: "R$ 1,20",
     costMonth: "R$ 797",
-    humanMonth: "R$ 5.800",
     economy: "86%",
     satisfaction: 96,
-    skills: ["Qualificação de leads", "Envio de propostas", "Fechamento e contratos"],
+    skills: [
+      "Cadastra e aprova parceiros",
+      "Entrega link rastreável por indicação",
+      "Conduz onboarding e reativação",
+    ],
   },
   {
-    name: "Ana",
-    seed: "Ana",
-    role: "Agente Financeiro",
+    name: "Sara",
+    photo: "/agents/sara.jpg",
+    role: "Especialista em Crédito",
     featured: false,
-    phone: null,
     description:
-      "Negocia débitos dentro das regras da empresa, emite segunda via de boleto e registra acordos automaticamente.",
+      "Traduz a necessidade financeira em um caminho possível e prepara a análise especializada.",
     gradient: "from-emerald-500 via-green-500 to-teal-600",
     bgGlow: "rgba(16,185,129,0.2)",
     costHour: "R$ 0,90",
     costMonth: "R$ 597",
-    humanMonth: "R$ 4.100",
     economy: "85%",
     satisfaction: 94,
-    skills: ["Negociação de débitos", "Emissão de boletos", "Registro de acordos"],
-  },
-  {
-    name: "Carlos",
-    seed: "Carlos",
-    role: "Suporte Técnico",
-    featured: false,
-    phone: null,
-    description:
-      "Abre chamados, faz diagnóstico guiado e resolve até 80% dos casos de N1 sem precisar de humano.",
-    gradient: "from-orange-500 via-amber-500 to-yellow-500",
-    bgGlow: "rgba(245,158,11,0.2)",
-    costHour: "R$ 1,10",
-    costMonth: "R$ 697",
-    humanMonth: "R$ 5.200",
-    economy: "87%",
-    satisfaction: 95,
-    skills: ["Abertura de tickets", "Diagnóstico N1", "Escala para N2/N3"],
-  },
-  {
-    name: "Sofia",
-    seed: "Sofia",
-    role: "SDR Comercial",
-    featured: false,
-    phone: null,
-    description:
-      "Prospecta ativamente pelo WhatsApp, qualifica interesse e agenda demos para o time de vendas.",
-    gradient: "from-pink-500 via-rose-500 to-red-500",
-    bgGlow: "rgba(244,63,94,0.2)",
-    costHour: "R$ 1,30",
-    costMonth: "R$ 897",
-    humanMonth: "R$ 6.200",
-    economy: "86%",
-    satisfaction: 97,
-    skills: ["Prospecção ativa", "Qualificação BANT", "Agendamento de demos"],
+    skills: [
+      "Simulação de financiamento imobiliário",
+      "Checagem de elegibilidade básica",
+      "Handoff preparado para o especialista humano",
+    ],
   },
 ];
 
-function AgentCard({ agent }: { agent: typeof agents[0] }) {
-  const photoUrl = `https://api.dicebear.com/7.x/personas/png?seed=${agent.seed}&size=240&backgroundColor=transparent`;
-
+function AgentCard({ agent }: { agent: (typeof agents)[0] }) {
   return (
     <div
       className={`relative rounded-3xl overflow-hidden border transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl group ${
@@ -106,7 +76,7 @@ function AgentCard({ agent }: { agent: typeof agents[0] }) {
         <div className="absolute top-4 left-4 z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-yellow-400/20 border border-yellow-400/40 backdrop-blur">
           <Crown className="w-3 h-3 text-yellow-400" />
           <span className="text-yellow-400 text-[10px] font-bold uppercase tracking-wider">
-            Primeiro agente
+            Caso real em produção
           </span>
         </div>
       )}
@@ -118,53 +88,30 @@ function AgentCard({ agent }: { agent: typeof agents[0] }) {
       </div>
 
       {/* Photo area */}
-      <div
-        className="relative h-56 flex items-end justify-center overflow-hidden"
-        style={{
-          background: `linear-gradient(160deg, ${agent.bgGlow.replace("0.2", "0.3")}, rgba(13,13,31,0.8))`,
-        }}
-      >
-        {/* Gradient bg */}
-        <div
-          className={`absolute inset-0 bg-gradient-to-br ${agent.gradient} opacity-20`}
+      <div className="relative h-64 overflow-hidden">
+        <Image
+          src={agent.photo}
+          alt={`Agente de IA ${agent.name} — ${agent.role}`}
+          fill
+          className="object-cover object-top"
+          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
         />
-        {/* Glow blob */}
         <div
-          className="absolute top-4 left-1/2 -translate-x-1/2 w-40 h-40 rounded-full blur-3xl"
-          style={{ background: agent.bgGlow }}
+          className={`absolute inset-0 bg-gradient-to-br ${agent.gradient} mix-blend-overlay opacity-30`}
         />
-        {/* Photo */}
-        <div className="relative z-10 w-44 h-44 drop-shadow-2xl">
-          <Image
-            src={photoUrl}
-            alt={`Agente ${agent.name}`}
-            fill
-            className="object-contain object-bottom"
-            unoptimized
-          />
-        </div>
+        <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#0d0d1f] to-transparent" />
       </div>
 
       {/* Content */}
       <div className="p-5 space-y-4">
         {/* Name + role */}
         <div>
-          <div className="flex items-center gap-2">
-            <h3 className="text-white font-black text-2xl">{agent.name}</h3>
-          </div>
+          <h3 className="text-white font-black text-2xl">{agent.name}</h3>
           <p
             className={`text-sm font-semibold bg-gradient-to-r ${agent.gradient} bg-clip-text text-transparent`}
           >
             {agent.role}
           </p>
-          {agent.phone && (
-            <div className="mt-1.5 flex items-center gap-1.5">
-              <Phone className="w-3 h-3 text-green-400" />
-              <span className="text-green-400 text-xs font-mono font-medium">
-                {agent.phone}
-              </span>
-            </div>
-          )}
         </div>
 
         {/* Description */}
@@ -173,9 +120,9 @@ function AgentCard({ agent }: { agent: typeof agents[0] }) {
         {/* Skills */}
         <ul className="space-y-1.5">
           {agent.skills.map((skill) => (
-            <li key={skill} className="flex items-center gap-2 text-xs text-gray-300">
+            <li key={skill} className="flex items-start gap-2 text-xs text-gray-300">
               <span
-                className={`w-1 h-1 rounded-full bg-gradient-to-r ${agent.gradient} shrink-0`}
+                className={`w-1 h-1 rounded-full bg-gradient-to-r ${agent.gradient} shrink-0 mt-1.5`}
                 style={{ minWidth: 4, minHeight: 4 }}
               />
               {skill}
@@ -239,7 +186,7 @@ function AgentCard({ agent }: { agent: typeof agents[0] }) {
 
 export default function AITeam() {
   return (
-    <section className="py-24 lg:py-32 relative overflow-hidden">
+    <section className="py-16 lg:py-24 relative overflow-hidden">
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -255,18 +202,19 @@ export default function AITeam() {
             Sua equipe de IA
           </p>
           <h2 className="text-4xl sm:text-5xl font-black text-white leading-tight">
-            Conheça seus novos
+            Conheça agentes reais,
             <br />
-            <span className="gradient-text">funcionários de IA</span>
+            <span className="gradient-text">já em produção</span>
           </h2>
           <p className="text-gray-400 text-lg max-w-xl mx-auto leading-relaxed">
-            Cada agente tem nome, especialidade e número de WhatsApp — e custa
-            uma fração de um colaborador CLT. Sem encargos, férias ou 13º.
+            Nada de mascote genérico: Ranny, Helena e Sara são funcionárias de
+            IA reais, rodando hoje em empresas do mercado imobiliário — e
+            custam uma fração de um colaborador CLT.
           </p>
         </div>
 
         {/* Cards grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {agents.map((agent) => (
             <AgentCard key={agent.name} agent={agent} />
           ))}
@@ -275,8 +223,8 @@ export default function AITeam() {
         {/* Bottom callout */}
         <div className="mt-10 text-center glass rounded-2xl p-5 border border-white/8 max-w-2xl mx-auto">
           <p className="text-white font-bold">
-            5 agentes juntos custam{" "}
-            <span className="gradient-text">R$ 3.485/mês</span>
+            3 agentes juntos custam{" "}
+            <span className="gradient-text">R$ 1.891/mês</span>
           </p>
           <p className="text-gray-500 text-sm mt-1">
             Menos que um único colaborador CLT — trabalhando 24h por dia, sem

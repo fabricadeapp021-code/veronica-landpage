@@ -7,6 +7,7 @@ const navLinks = [
   { label: "Produto", href: "#features" },
   { label: "Como Funciona", href: "#how-it-works" },
   { label: "Casos de Uso", href: "#use-cases" },
+  { label: "Deploy", href: "#deployment" },
   { label: "Preços", href: "#pricing" },
 ];
 

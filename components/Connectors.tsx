@@ -48,13 +48,13 @@ const benefits = [
 
 export default function Connectors() {
   return (
-    <section className="py-24 lg:py-32 relative bg-white/[0.015]">
+    <section className="py-16 lg:py-24 relative bg-white/[0.015]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
         {/* Header */}
         <div className="text-center space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-brand-500/30 bg-brand-500/10 text-brand-300 text-sm font-medium">
             <Plug className="w-3.5 h-3.5" />
-            OpenClaw Connectors
+            Venorica AI Connectors
           </div>
           <h2 className="text-4xl sm:text-5xl font-black text-white leading-tight">
             Seu agente conectado
@@ -70,12 +70,12 @@ export default function Connectors() {
 
         {/* Connectors visual */}
         <div className="relative">
-          {/* Center — OpenClaw hub */}
+          {/* Center — Venorica AI hub */}
           <div className="flex justify-center mb-10">
             <div className="relative">
               <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-brand-600 to-accent-600 flex flex-col items-center justify-center shadow-2xl shadow-brand-500/40 border border-brand-400/30 animate-glow">
                 <Zap className="w-8 h-8 text-white mb-1" />
-                <span className="text-white text-[10px] font-bold">OpenClaw</span>
+                <span className="text-white text-[10px] font-bold">Venorica</span>
               </div>
               {/* Pulse rings */}
               <div className="absolute inset-0 rounded-2xl border-2 border-brand-500/30 animate-ping" />
@@ -125,7 +125,7 @@ export default function Connectors() {
           <div className="flex-1">
             <p className="text-white font-bold text-sm mb-1">Não encontrou seu sistema?</p>
             <p className="text-gray-400 text-sm leading-relaxed">
-              OpenClaw permite conectar qualquer API REST ou GraphQL em minutos. Se o seu sistema
+              A Venorica AI permite conectar qualquer API REST ou GraphQL em minutos. Se o seu sistema
               tem API, seu agente consegue usar. Nossa equipe cria conectores customizados gratuitamente
               no plano Growth e Enterprise.
             </p>

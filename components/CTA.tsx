@@ -2,7 +2,7 @@ import { ArrowRight, MessageCircle } from "lucide-react";
 
 export default function CTA() {
   return (
-    <section id="contact" className="py-24 lg:py-32 relative overflow-hidden">
+    <section id="contact" className="py-16 lg:py-24 relative overflow-hidden">
       {/* Background orbs */}
       <div className="glow-orb w-[600px] h-[600px] bg-brand-600 top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2" style={{ opacity: 0.2 }} />
       <div className="glow-orb w-[400px] h-[400px] bg-accent-500 top-1/2 right-1/4 translate-x-1/2 -translate-y-1/2" style={{ opacity: 0.15 }} />

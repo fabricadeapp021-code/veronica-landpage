@@ -100,7 +100,7 @@ export default function UseCases() {
   const colors = colorMap[current.color];
 
   return (
-    <section id="use-cases" className="py-24 lg:py-32 relative bg-white/[0.01]">
+    <section id="use-cases" className="py-16 lg:py-24 relative bg-white/[0.01]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center space-y-4 mb-16">

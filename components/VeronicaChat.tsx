@@ -44,7 +44,8 @@ export default function VeronicaChat() {
     contact: "",
   });
   const [sessionId, setSessionId] = useState("");
-  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const messagesContainerRef = useRef<HTMLDivElement | null>(null);
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
     const key = "venorica-veronica-session";
@@ -57,7 +58,13 @@ export default function VeronicaChat() {
   }, []);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    const container = messagesContainerRef.current;
+    if (!container) return;
+    container.scrollTo({ top: container.scrollHeight, behavior: "smooth" });
   }, [messages, isSending]);
 
   const visitorPayload = useMemo(
@@ -203,7 +210,10 @@ export default function VeronicaChat() {
           />
         </div>
 
-        <div className="h-[390px] space-y-3 overflow-y-auto bg-[#090a14] px-3 py-4">
+        <div
+          ref={messagesContainerRef}
+          className="h-[390px] space-y-3 overflow-y-auto bg-[#090a14] px-3 py-4"
+        >
           {messages.map((message, index) => (
             <div
               key={`${message.role}-${index}`}
@@ -238,7 +248,6 @@ export default function VeronicaChat() {
               </div>
             </div>
           )}
-          <div ref={messagesEndRef} />
         </div>
 
         <div className="border-t border-white/10 bg-[#10111d] p-3">
