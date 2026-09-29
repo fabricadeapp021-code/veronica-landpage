@@ -67,7 +67,7 @@ export default function Header() {
               href="#contact"
               className="px-4 py-2 rounded-lg bg-brand-600 hover:bg-brand-500 text-white text-sm font-semibold transition-all hover:shadow-lg hover:shadow-brand-500/30"
             >
-              Começar Grátis
+              Começar Agora
             </a>
           </div>
 
@@ -98,7 +98,7 @@ export default function Header() {
             href="#contact"
             className="block w-full text-center px-4 py-2.5 rounded-lg bg-brand-600 text-white text-sm font-semibold mt-2"
           >
-            Começar Grátis
+            Começar Agora
           </a>
         </div>
       )}

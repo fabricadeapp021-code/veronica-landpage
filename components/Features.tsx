@@ -10,6 +10,7 @@ import {
   KeyRound,
   Megaphone,
   BellRing,
+  Network,
 } from "lucide-react";
 
 const features = [
@@ -25,9 +26,9 @@ const features = [
     icon: KeyRound,
     color: "text-lime-400",
     bg: "bg-lime-400/10 border-lime-400/20",
-    title: "Conexão via OAuth 2",
+    title: "WhatsApp Embedded Signup",
     description:
-      "Você conecta sua própria conta do WhatsApp Business direto na nossa aplicação, com login seguro via OAuth 2 — a titularidade do número é sua.",
+      "Você conecta sua própria conta do WhatsApp Business direto na nossa aplicação pelo fluxo oficial da Meta (Embedded Signup, OAuth 2). Seus dados e sua forma de pagamento ficam do seu lado — controle e gestão são seus.",
   },
   {
     icon: Megaphone,
@@ -44,6 +45,14 @@ const features = [
     title: "Mensagens ativas",
     description:
       "O agente não espera só ser chamado: ele inicia contato, envia lembretes, faz follow-up e reativa leads frios por conta própria.",
+  },
+  {
+    icon: Network,
+    color: "text-violet-400",
+    bg: "bg-violet-400/10 border-violet-400/20",
+    title: "Colaboração entre agentes (A2A)",
+    description:
+      "Um agente pode acionar outro da sua equipe — cada um com sua especialidade e permissões próprias — e juntos atualizam boards e CRMs como ClickUp em tempo real.",
   },
   {
     icon: Brain,

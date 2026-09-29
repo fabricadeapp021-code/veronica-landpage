@@ -1,31 +1,9 @@
 "use client";
 
-import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef } from "react";
 import { Bot, Building2, Loader2, Send, UserRound } from "lucide-react";
 import MarkdownRenderer from "./MarkdownRenderer";
-
-type ChatMessage = {
-  role: "user" | "assistant";
-  content: string;
-};
-
-type Visitor = {
-  name: string;
-  company: string;
-  contact: string;
-};
-
-const apiUrl =
-  process.env.NEXT_PUBLIC_OPENCLAW_API_URL?.replace(/\/$/, "") ||
-  "http://127.0.0.1:3010";
-
-const initialMessages: ChatMessage[] = [
-  {
-    role: "assistant",
-    content:
-      "Oi, eu sou a Veronica. Posso te mostrar como a Venorica AI coloca funcionarios de IA para atender, vender e operar 24/7.",
-  },
-];
+import { useVeronicaChat } from "@/contexts/veronica-chat-context";
 
 const quickPrompts = [
   "Como funciona a Venorica AI?",
@@ -34,28 +12,10 @@ const quickPrompts = [
 ];
 
 export default function VeronicaChat() {
-  const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
-  const [input, setInput] = useState("");
-  const [isSending, setIsSending] = useState(false);
-  const [error, setError] = useState("");
-  const [visitor, setVisitor] = useState<Visitor>({
-    name: "",
-    company: "",
-    contact: "",
-  });
-  const [sessionId, setSessionId] = useState("");
+  const { messages, input, setInput, isSending, error, visitor, setVisitor, sendMessage } =
+    useVeronicaChat();
   const messagesContainerRef = useRef<HTMLDivElement | null>(null);
   const isFirstRender = useRef(true);
-
-  useEffect(() => {
-    const key = "venorica-veronica-session";
-    const existing = window.localStorage.getItem(key);
-    const next =
-      existing ||
-      (window.crypto?.randomUUID?.() ?? `landing-${Date.now().toString(36)}`);
-    window.localStorage.setItem(key, next);
-    setSessionId(next);
-  }, []);
 
   useEffect(() => {
     if (isFirstRender.current) {
@@ -66,92 +26,6 @@ export default function VeronicaChat() {
     if (!container) return;
     container.scrollTo({ top: container.scrollHeight, behavior: "smooth" });
   }, [messages, isSending]);
-
-  const visitorPayload = useMemo(
-    () => ({
-      name: visitor.name.trim() || undefined,
-      company: visitor.company.trim() || undefined,
-      email: visitor.contact.includes("@") ? visitor.contact.trim() : undefined,
-      phone: visitor.contact && !visitor.contact.includes("@") ? visitor.contact.trim() : undefined,
-    }),
-    [visitor],
-  );
-
-  async function sendMessage(text: string) {
-    const message = text.trim();
-    if (!message || isSending) return;
-
-    const nextMessages: ChatMessage[] = [...messages, { role: "user", content: message }];
-    setMessages(nextMessages);
-    setInput("");
-    setError("");
-    setIsSending(true);
-
-    try {
-      const response = await fetch(`${apiUrl}/public/veronica/chat-stream`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message,
-          sessionId,
-          visitor: visitorPayload,
-          history: nextMessages.slice(-8),
-        }),
-      });
-
-      if (!response.ok || !response.body) {
-        throw new Error("A Veronica nao conseguiu responder agora.");
-      }
-
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let buffer = "";
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        buffer += decoder.decode(value, { stream: true });
-        const lines = buffer.split("\n");
-        buffer = lines.pop() ?? "";
-
-        for (const line of lines) {
-          if (!line.startsWith("data: ")) continue;
-          try {
-            const event = JSON.parse(line.slice(6));
-            if (event.type === "complete") {
-              setMessages((current) => [
-                ...current,
-                {
-                  role: "assistant",
-                  content:
-                    event.reply ||
-                    "Consigo te ajudar com atendimento 24/7, vendas, triagem e handoff humano.",
-                },
-              ]);
-            } else if (event.type === "error") {
-              throw new Error(event.error || "Erro ao processar mensagem.");
-            }
-          } catch (parseErr) {
-            if (parseErr instanceof SyntaxError) continue;
-            throw parseErr;
-          }
-        }
-      }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Falha ao falar com a Veronica.");
-      setMessages((current) => [
-        ...current,
-        {
-          role: "assistant",
-          content:
-            "Tive uma instabilidade agora. Deixe seu contato e eu encaminho para o time humano da Venorica.",
-        },
-      ]);
-    } finally {
-      setIsSending(false);
-    }
-  }
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();

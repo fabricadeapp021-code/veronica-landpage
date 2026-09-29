@@ -1,6 +1,56 @@
-import { ArrowRight, MessageCircle } from "lucide-react";
+"use client";
+
+import { FormEvent, useState } from "react";
+import { ArrowRight, MessageCircle, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
+import { useVeronicaChat } from "@/contexts/veronica-chat-context";
+
+const roleOptions = [
+  "Vendas / SDR",
+  "Suporte ao cliente",
+  "Agendamento",
+  "Cobrança",
+  "Outro",
+];
+
+function formatWhatsApp(value: string) {
+  const digits = value.replace(/\D/g, "").slice(0, 11);
+  if (digits.length <= 2) return digits.length ? `(${digits}` : "";
+  if (digits.length <= 6) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+  if (digits.length <= 10) return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
+  return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+}
 
 export default function CTA() {
+  const { visitor, setVisitor, sendMessage, isSending, error } = useVeronicaChat();
+  const [role, setRole] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [formError, setFormError] = useState("");
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const company = visitor.company.trim();
+    const phoneDigits = visitor.contact.replace(/\D/g, "");
+
+    if (!company) {
+      setFormError("Informe o nome da sua empresa.");
+      return;
+    }
+    if (phoneDigits.length < 10 || phoneDigits.length > 11) {
+      setFormError("Informe um WhatsApp válido, com DDD.");
+      return;
+    }
+    if (!role) {
+      setFormError("Selecione qual vai ser o papel do agente.");
+      return;
+    }
+
+    setFormError("");
+    void sendMessage(
+      `Olá! Sou de ${company} e quero um agente de IA para: ${role}. Meu WhatsApp é ${visitor.contact}.`,
+    ).then(() => setSubmitted(true));
+  }
+
   return (
     <section id="contact" className="py-16 lg:py-24 relative overflow-hidden">
       {/* Background orbs */}
@@ -31,39 +81,95 @@ export default function CTA() {
         </div>
 
         {/* Form card */}
-        <div className="glass rounded-2xl p-8 max-w-xl mx-auto space-y-4">
-          <h3 className="text-white font-bold text-lg">Solicitar demonstração gratuita</h3>
+        <div className="glass rounded-2xl p-8 max-w-xl mx-auto space-y-4 text-left">
+          <h3 className="text-white font-bold text-lg text-center">Solicitar demonstração gratuita</h3>
 
-          <div className="space-y-3">
-            <input
-              type="text"
-              placeholder="Nome da empresa"
-              className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-brand-500/50 transition-colors"
-            />
-            <input
-              type="tel"
-              placeholder="Seu WhatsApp"
-              className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-brand-500/50 transition-colors"
-            />
-            <select className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-gray-400 text-sm focus:outline-none focus:border-brand-500/50 transition-colors appearance-none">
-              <option value="">Qual o papel do agente?</option>
-              <option>Vendas / SDR</option>
-              <option>Suporte ao cliente</option>
-              <option>Agendamento</option>
-              <option>Cobrança</option>
-              <option>Outro</option>
-            </select>
-          </div>
+          {submitted ? (
+            <div className="flex flex-col items-center gap-3 py-4 text-center">
+              <CheckCircle2 className="h-10 w-10 text-green-400" />
+              <p className="text-white font-semibold">Pedido enviado!</p>
+              <p className="text-gray-400 text-sm max-w-sm">
+                A Veronica já está te respondendo. Abra o chat no ícone{" "}
+                <MessageCircle className="inline h-4 w-4 text-brand-400" /> no canto da tela
+                para continuar a conversa.
+              </p>
+              <button
+                onClick={() => {
+                  setSubmitted(false);
+                  setRole("");
+                  setFormError("");
+                }}
+                className="text-sm text-brand-400 hover:text-brand-300 font-medium"
+              >
+                Enviar outro pedido
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} noValidate className="space-y-3">
+              <div className="space-y-3">
+                <input
+                  type="text"
+                  value={visitor.company}
+                  onChange={(event) =>
+                    setVisitor((current) => ({ ...current, company: event.target.value }))
+                  }
+                  placeholder="Nome da empresa"
+                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-brand-500/50 transition-colors"
+                />
+                <input
+                  type="tel"
+                  inputMode="numeric"
+                  value={visitor.contact}
+                  onChange={(event) =>
+                    setVisitor((current) => ({
+                      ...current,
+                      contact: formatWhatsApp(event.target.value),
+                    }))
+                  }
+                  placeholder="Seu WhatsApp — (11) 99999-9999"
+                  maxLength={15}
+                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-brand-500/50 transition-colors"
+                />
+                <select
+                  value={role}
+                  onChange={(event) => setRole(event.target.value)}
+                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-gray-400 text-sm focus:outline-none focus:border-brand-500/50 transition-colors appearance-none"
+                >
+                  <option value="">Qual o papel do agente?</option>
+                  {roleOptions.map((opt) => (
+                    <option key={opt} value={opt}>
+                      {opt}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-          <button className="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-gradient-to-r from-brand-600 to-accent-600 text-white font-bold text-base shadow-xl shadow-brand-600/30 hover:shadow-brand-500/40 hover:-translate-y-0.5 transition-all">
-            <MessageCircle className="w-5 h-5" />
-            Quero minha demo grátis
-            <ArrowRight className="w-4 h-4" />
-          </button>
+              {(formError || error) && (
+                <div className="flex items-center gap-2 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs text-red-300">
+                  <AlertCircle className="h-4 w-4 shrink-0" />
+                  {formError || error}
+                </div>
+              )}
 
-          <p className="text-gray-500 text-xs">
-            Sem compromisso. Nossa equipe entra em contato em até 2 horas.
-          </p>
+              <button
+                type="submit"
+                disabled={isSending}
+                className="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-gradient-to-r from-brand-600 to-accent-600 text-white font-bold text-base shadow-xl shadow-brand-600/30 hover:shadow-brand-500/40 hover:-translate-y-0.5 transition-all disabled:opacity-60 disabled:hover:translate-y-0"
+              >
+                {isSending ? (
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                ) : (
+                  <MessageCircle className="w-5 h-5" />
+                )}
+                {isSending ? "Enviando..." : "Quero minha demo grátis"}
+                {!isSending && <ArrowRight className="w-4 h-4" />}
+              </button>
+
+              <p className="text-gray-500 text-xs text-center">
+                Sem compromisso. Nossa equipe entra em contato em até 2 horas.
+              </p>
+            </form>
+          )}
         </div>
 
         {/* Trust badges */}

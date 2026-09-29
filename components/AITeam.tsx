@@ -12,7 +12,7 @@ const agents = [
     gradient: "from-violet-600 via-purple-600 to-indigo-600",
     bgGlow: "rgba(139,92,246,0.25)",
     costHour: "R$ 0,80",
-    costMonth: "R$ 497",
+    costMonth: "R$ 699",
     economy: "89%",
     satisfaction: 98,
     skills: [
@@ -224,7 +224,7 @@ export default function AITeam() {
         <div className="mt-10 text-center glass rounded-2xl p-5 border border-white/8 max-w-2xl mx-auto">
           <p className="text-white font-bold">
             3 agentes juntos custam{" "}
-            <span className="gradient-text">R$ 1.891/mês</span>
+            <span className="gradient-text">R$ 2.093/mês</span>
           </p>
           <p className="text-gray-500 text-sm mt-1">
             Menos que um único colaborador CLT — trabalhando 24h por dia, sem
