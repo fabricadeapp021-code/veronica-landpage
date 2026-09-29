@@ -3,7 +3,7 @@ import { CheckCircle2, Zap } from "lucide-react";
 const plans = [
   {
     name: "Starter",
-    price: "R$ 497",
+    price: "R$ 699",
     period: "/mês",
     description: "Para empresas que querem começar com 1 agente focado.",
     highlight: false,

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { VeronicaChatProvider } from "@/contexts/veronica-chat-context";
 
 export const metadata: Metadata = {
   title: "Venorica AI — Funcionários de IA para sua Empresa",
@@ -29,7 +30,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR" className="dark">
-      <body className="bg-[#08080f] text-white antialiased">{children}</body>
+      <body className="bg-[#08080f] text-white antialiased">
+        <VeronicaChatProvider>{children}</VeronicaChatProvider>
+      </body>
     </html>
   );
 }

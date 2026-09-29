@@ -11,6 +11,7 @@ import Deployment from "@/components/Deployment";
 import Pricing from "@/components/Pricing";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
+import VeronicaChatBubble from "@/components/VeronicaChatBubble";
 
 export default function Home() {
   return (
@@ -28,6 +29,7 @@ export default function Home() {
       <Pricing />
       <CTA />
       <Footer />
+      <VeronicaChatBubble />
     </main>
   );
 }
