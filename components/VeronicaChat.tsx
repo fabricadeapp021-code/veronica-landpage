@@ -114,7 +114,10 @@ export default function VeronicaChat() {
             </div>
           ))}
 
-          {isSending && (
+          {/* Some assim que o primeiro pedaço de texto chega (streaming real) — a
+              última mensagem já vira a resposta da Veronica sendo escrita ao vivo,
+              em vez de continuar mostrando "digitando" por cima dela. */}
+          {isSending && messages[messages.length - 1]?.role !== "assistant" && (
             <div className="flex justify-start">
               <div className="flex items-center gap-2 rounded-2xl rounded-tl-sm border border-white/10 bg-[#1a1d30] px-3 py-2 text-xs text-gray-300">
                 <Loader2 className="h-3.5 w-3.5 animate-spin text-brand-300" />
