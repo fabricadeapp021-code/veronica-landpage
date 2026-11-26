@@ -1,10 +1,17 @@
 import { Zap } from "lucide-react";
+import CookiePreferencesLink from "@/components/CookiePreferencesLink";
 
 export default function Footer() {
   const links = {
     Produto: ["Funcionalidades", "Como Funciona", "Integrações", "Segurança", "Roadmap"],
     Empresa: ["Sobre nós", "Blog", "Carreiras", "Parceiros", "Contato"],
     Legal: ["Termos de Uso", "Política de Privacidade", "LGPD", "Cookies"],
+  };
+  const hrefs: Record<string, string> = {
+    "Termos de Uso": "/termos",
+    "Política de Privacidade": "/privacidade",
+    LGPD: "/privacidade#direitos",
+    Cookies: "/cookies",
   };
 
   return (
@@ -49,13 +56,18 @@ export default function Footer() {
                 {items.map((item) => (
                   <li key={item}>
                     <a
-                      href="#"
+                      href={hrefs[item] ?? "#"}
                       className="text-gray-500 hover:text-gray-300 text-sm transition-colors"
                     >
                       {item}
                     </a>
                   </li>
                 ))}
+                {category === "Legal" && (
+                  <li>
+                    <CookiePreferencesLink className="text-gray-500 hover:text-gray-300 text-sm transition-colors" />
+                  </li>
+                )}
               </ul>
             </div>
           ))}
@@ -68,7 +80,7 @@ export default function Footer() {
           </p>
           <p className="text-gray-600 text-xs flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-            Todos os sistemas operacionais · Dados armazenados no Brasil
+            Todos os sistemas operacionais
           </p>
         </div>
       </div>
