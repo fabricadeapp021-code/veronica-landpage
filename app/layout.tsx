@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { VeronicaChatProvider } from "@/contexts/veronica-chat-context";
+import CookieConsent from "@/components/CookieConsent";
 
 export const metadata: Metadata = {
   title: "Venorica AI — Funcionários de IA para sua Empresa",
@@ -32,6 +33,7 @@ export default function RootLayout({
     <html lang="pt-BR" className="dark">
       <body className="bg-[#08080f] text-white antialiased">
         <VeronicaChatProvider>{children}</VeronicaChatProvider>
+        <CookieConsent />
       </body>
     </html>
   );

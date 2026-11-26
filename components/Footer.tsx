@@ -1,4 +1,5 @@
 import { Zap } from "lucide-react";
+import CookiePreferencesLink from "@/components/CookiePreferencesLink";
 
 export default function Footer() {
   const links = {
@@ -62,6 +63,11 @@ export default function Footer() {
                     </a>
                   </li>
                 ))}
+                {category === "Legal" && (
+                  <li>
+                    <CookiePreferencesLink className="text-gray-500 hover:text-gray-300 text-sm transition-colors" />
+                  </li>
+                )}
               </ul>
             </div>
           ))}
