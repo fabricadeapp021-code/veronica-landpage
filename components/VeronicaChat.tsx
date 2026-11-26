@@ -125,6 +125,13 @@ export default function VeronicaChat() {
               {isSending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
             </button>
           </form>
+          <p className="mt-2 text-[11px] leading-snug text-gray-500">
+            Ao conversar, você concorda com nossa{" "}
+            <a href="/privacidade" target="_blank" rel="noopener" className="underline underline-offset-2 hover:text-gray-300">
+              Política de Privacidade
+            </a>
+            .
+          </p>
           {error && <p className="mt-2 text-xs text-red-300">{error}</p>}
         </div>
       </div>

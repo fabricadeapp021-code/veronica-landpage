@@ -6,6 +6,12 @@ export default function Footer() {
     Empresa: ["Sobre nós", "Blog", "Carreiras", "Parceiros", "Contato"],
     Legal: ["Termos de Uso", "Política de Privacidade", "LGPD", "Cookies"],
   };
+  const hrefs: Record<string, string> = {
+    "Termos de Uso": "/termos",
+    "Política de Privacidade": "/privacidade",
+    LGPD: "/privacidade#direitos",
+    Cookies: "/cookies",
+  };
 
   return (
     <footer className="border-t border-white/5 bg-white/[0.01] py-16">
@@ -49,7 +55,7 @@ export default function Footer() {
                 {items.map((item) => (
                   <li key={item}>
                     <a
-                      href="#"
+                      href={hrefs[item] ?? "#"}
                       className="text-gray-500 hover:text-gray-300 text-sm transition-colors"
                     >
                       {item}
@@ -68,7 +74,7 @@ export default function Footer() {
           </p>
           <p className="text-gray-600 text-xs flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-            Todos os sistemas operacionais · Dados armazenados no Brasil
+            Todos os sistemas operacionais
           </p>
         </div>
       </div>
